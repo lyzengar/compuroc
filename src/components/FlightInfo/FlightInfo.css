@@ -1,0 +1,9 @@
+.FlightInfo {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    height: 75vh;
+    border: solid black 1px;
+    padding: 20px;
+    margin-right: 10px;
+}
