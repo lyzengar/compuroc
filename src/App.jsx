@@ -15,8 +15,9 @@ class App extends Component {
       mass: 0,
       dragCoef: 0,
       motorManu: "",
-      motorLetter: [],
+      motorLetter: "",
       motorClass: [],
+      selectedMotorClass:"",
       avgThrust: "",
       burnTime: "",
       totalWeight: "",
@@ -53,49 +54,81 @@ class App extends Component {
   handleChange = (field, e) => {
     this.setState({
       [field]: e.target.value
+    }, function() {
+      if (field === 'motorLetter' && this.state.motorManu) {
+        this.handleManSelected();
+      }
     });
   }
-
-  handleManSelected = (e) => {
-    var postData = `<search-request><manufacturer>${e.target.value}</manufacturer></search-request>`;
+  
+  handleManSelected = () => {
+    var postData = `<search-request><manufacturer>${this.state.motorManu}</manufacturer><impulse-class>${this.state.motorLetter}</impulse-class></search-request>`;
       fetch('http://www.thrustcurve.org/servlets/search', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: postData
       }).then(res => res.text())
-        .then(xml => parseString(xml, function(err, data) {
+        .then(xml => parseString(xml, (err, data) => {
+          console.log(data)
           let apiResults = data["search-response"].results[0].result
-          let impulseClasses = new Set();
-          apiResults.forEach(item => impulseClasses.add(item["impulse-class"][0]));
-          
-          console.dir([...impulseClasses]);
+          let commonNames = apiResults.map(result => result['common-name'][0]);
+          this.setState({motorClass: commonNames})
         }))  
   }
+
+  handleMotorData = (e) => {
+    this.setState({selectedMotorClass: e.target.value})
+    var postData = `<search-request><manufacturer>${this.state.motorManu}</manufacturer><impulse-class>${this.state.motorLetter}</impulse-class><common-name>${e.target.value}</common-name></search-request>`;
+      fetch('http://www.thrustcurve.org/servlets/search', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: postData
+      }).then(res => res.text())
+        .then(xml => parseString(xml, (err, data) => {
+          console.log(data)
+          let apiResults = data["search-response"].results[0].result[0];
+          let averageThrust = apiResults['avg-thrust-n'];
+          let burn = apiResults['burn-time-s'];
+          let totalW = apiResults['total-weight-g'];
+          let propW = apiResults['prop-weight-g'];
+          this.setState({avgThrust: averageThrust[0]})
+          this.setState({burnTime: burn[0]})
+          this.setState({totalWeight: totalW[0]})
+          this.setState({propWeight: propW[0]})
+        }))
+  }
+
+  //manufacturerId=1&designation=&motor=&type=&impulseClass=H&diameter=&certOrgId=&propellant=&availability=regular%2Coccasional%2C+&sortBy=impulse_class
 
   calcLaunch = () => {
     var W = ((this.state.mass + this.state.totalWeight)/1000) * 9.8;
     var a = (this.state.avgThrust / W * 9.8) - 1;
     var A = Math.pow((Math.PI * this.state.diameter), 2) / 4
     var beta = W / (this.state.dragCoef * A);
-    var g = 9.8;
-    var rho = 1.225;
-    var Sburnout = (2 * beta / g * rho) * Math.log(Math.cosh(Math.sqrt((a * rho) / (2 * beta)) * g * this.state.burnTime));
-    var Vburnout = Math.sqrt((2 * beta * a) / rho) * Math.tanh(Math.sqrt((a * rho) / (2 * beta)) * g * this.state.burnTime); //maxVel
+    this.g = 9.8;
+    this.rho = 1.225;
+    var Sburnout = (2 * beta / this.g * this.rho) * Math.log(Math.cosh(Math.sqrt((a * this.rho) / (2 * beta)) * this.g * this.state.burnTime));
+    var Vburnout = Math.sqrt((2 * beta * a) / this.rho) * Math.tanh(Math.sqrt((a * this.rho) / (2 * beta)) * this.g * this.state.burnTime); //maxVel
     var newW = ((this.state.mass + this.state.totalWeight - this.state.propWeight)/1000) * 9.8;
     var newa = (this.state.avgThrust / newW * 9.8) - 1;
-    var newBeta = newW / (this.state.dragCoef * A);
-    var Scoast = (newBeta / g * rho) * Math.log(1 + (rho / 2 * newBeta) * Math.pow(Vburnout, 2));
-    var tCoast = (Math.sqrt(2 * newBeta / rho) / g) * Math.atan(Math.sqrt(rho / 2 * newBeta) * Vburnout);
-    var maxAltitude = Sburnout + Scoast;
-    var tTA = this.state.burnTime + tCoast; //timeToApogee
+    this.newBeta = newW / (this.state.dragCoef * A);
+    this.Scoast = (this.newBeta / this.g * this.rho) * Math.log(1 + (this.rho / 2 * this.newBeta) * Math.pow(Vburnout, 2));
+    this.tCoast = (Math.sqrt(2 * this.newBeta / this.rho) / this.g) * Math.atan(Math.sqrt(this.rho / 2 * this.newBeta) * Vburnout);
+    var maxAltitude = Sburnout + this.Scoast;
+    this.tTA = this.state.burnTime + this.tCoast; //timeToApogee
+
+    this.graphLaunch();
   }
 
-  // graphLaunch = () => {
-  //   var graphData = [{x: 0, y: 0}];
-  //   for(var t = tTA - tCoast; t < tTA; t + 0.1) {
-
-  //   }
-  // }
+  graphLaunch = () => {
+    var graphData = [{x: 0, y: 0}];
+    var t = this.tTA - this.tCoast;
+    var graphAlt = () => this.Scoast + (2 * this.newBeta / this.rho * this.g) * Math.log(Math.cos(Math.sqrt(this.rho / 2 * this.newBeta) * this.g * (this.tCoast - t)));
+    for(var i = t; i < this.tTA; i + 0.1) {
+      graphData.push({x: i, y: graphAlt()})
+    }
+    console.log(graphData);
+  }
 
   componentDidMount() {
     let user = userService.getUser();
@@ -115,6 +148,10 @@ class App extends Component {
           handleChange={this.handleChange}
           handleManSelected={this.handleManSelected}
           getMotorInfo={this.getMotorInfo}
+          motorClass={this.state.motorClass}
+          handleMotorData={this.handleMotorData}
+          calcLaunch={this.calcLaunch}
+          graphLaunch={this.graphLaunch}
         />
         <SignupPage
           showSignup={this.state.showSignup}

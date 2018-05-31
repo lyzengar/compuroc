@@ -9,8 +9,13 @@ const Center = (props) => {
             <Inputs
                 handleChange={props.handleChange}
                 handleManSelected={props.handleManSelected}
+                motorClass={props.motorClass}
+                handleMotorData={props.handleMotorData}
             />
-            <Graph />
+            <Graph
+                calcLaunch={props.calcLaunch}
+                graphLaunch={props.graphLaunch}
+            />
         </div>
     )
 }

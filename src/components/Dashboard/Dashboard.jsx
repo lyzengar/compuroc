@@ -11,6 +11,10 @@ const Dashboard = (props) => {
             <Center
                 handleChange={props.handleChange}
                 handleManSelected={props.handleManSelected}
+                motorClass={props.motorClass}
+                calcLaunch={props.calcLaunch}
+                graphLaunch={props.graphLaunch}
+                handleMotorData={props.handleMotorData}
             />
             <FlightInfo
                 getMotorInfo={props.getMotorInfo}
