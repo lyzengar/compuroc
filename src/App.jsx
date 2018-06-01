@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import userService from '../src/utils/userService'
+import tokenService from '../src/utils/tokenService'
 import NavBar from './components/Nav/Nav';
 import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
@@ -35,7 +36,9 @@ class App extends Component {
       showSignup: false,
       showLogin: false,
       disableButton: true,
-      fillXY: []
+      fillXY: [],
+      flightName: "", 
+      flights: []
     }
   }
 
@@ -108,11 +111,29 @@ class App extends Component {
         }))
   }
 
-  postFlightInfo = (data) => {
-    fetch('/api/flights', {
-      method: 'post',
-      body: JSON.stringify(data)
+  addFlight = () => {
+    fetch('/api/users/addFlight', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + tokenService.getToken()
+      },
+      body: JSON.stringify({
+        diameter: this.state.diameter,
+        mass: this.state.mass,
+        dragCoef: this.state.dragCoef,
+        motorManu: this.state.motorManu,
+        motorLetter: this.state.motorLetter,
+        motorClass: this.state.motorClass[0],
+        name: this.state.flightName
+      })
     })
+    .then(data => data.json())
+    .then(data => this.setState({flights: data.flights}))
+  }
+
+  updateName = (e) => {
+    this.setState({flightName: e.target.value})
   }
 
   calcLaunch = () => {
@@ -175,6 +196,9 @@ class App extends Component {
           maxVel={this.state.maxVel}
           tTA={this.state.tTA}
           fillXY={this.state.fillXY}
+          addFlight={this.addFlight}
+          updateName={this.updateName}
+          flights={this.state.flights}
         />
         <SignupPage
           showSignup={this.state.showSignup}

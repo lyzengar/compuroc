@@ -10,7 +10,7 @@ router.post('/login', usersController.login);
 
 
 /*---------- Protected Routes ----------*/
-
+router.post('/addFlight', usersController.addFlight);
 
 
 

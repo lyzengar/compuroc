@@ -1,20 +1,12 @@
 const mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 const SALT_ROUNDS = 6;
-
-var FlightSchema = new mongoose.Schema({
-    diameter: {type: Number, required: true},
-    mass: {type: Number, required: true},
-    dragCoef: {type: Number, required: true},
-    motorManu: {type: String, required: true},
-    motorLetter: {type: String, required: true},
-    motorClass: {type: String, required: true}
-})
+const Flight = require('./Flight');
 
 const UserSchema = new mongoose.Schema({
     username: String,
     password: String,
-    flights: [FlightSchema]
+    flights: [Flight]
 });
 
 UserSchema.set('toJSON', {

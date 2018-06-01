@@ -1,4 +1,5 @@
 var User = require('../models/User');
+const Flight = require('../models/Flight');
 var jwt = require('jsonwebtoken');
 var SECRET = process.env.SECRET;
 
@@ -33,7 +34,17 @@ function login(req, res) {
   }).catch(err => res.status(401).json(err));
 }
 
+function addFlight(req, res) {
+  User.findById(req.user._id, function(err, user) {
+    user.flights.push(req.body)
+    user.save(function(err, user) {
+      res.status(200).json({ flights: user.flights})
+    })
+  })
+}
+
 module.exports = {
   signup,
-  login
+  login,
+  addFlight
 };

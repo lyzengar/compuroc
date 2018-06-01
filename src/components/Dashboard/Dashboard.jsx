@@ -7,7 +7,9 @@ import './Dashboard.css';
 const Dashboard = (props) => {
     return (
         <div className="Dashboard">
-            <Flights />
+            <Flights
+                flights={props.flights}
+            />
             <Center
                 handleChange={props.handleChange}
                 handleManSelected={props.handleManSelected}
@@ -15,6 +17,8 @@ const Dashboard = (props) => {
                 graphLaunch={props.graphLaunch}
                 handleMotorData={props.handleMotorData}
                 fillXY={props.fillXY}
+                addFlight={props.addFlight}
+                updateName={props.updateName}
                 />
             <FlightInfo
                 calcLaunch={props.calcLaunch}

@@ -17,6 +17,8 @@ const Center = (props) => {
                 graphLaunch={props.graphLaunch}
                 disableButton={props.disableButton}
                 fillXY={props.fillXY}
+                addFlight={props.addFlight}
+                updateName={props.updateName}
             />
         </div>
     )
