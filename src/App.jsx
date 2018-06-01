@@ -34,7 +34,8 @@ class App extends Component {
       newBeta: "", 
       showSignup: false,
       showLogin: false,
-      disableButton: true
+      disableButton: true,
+      fillXY: []
     }
   }
 
@@ -107,6 +108,13 @@ class App extends Component {
         }))
   }
 
+  postFlightInfo = (data) => {
+    fetch('/api/flights', {
+      method: 'post',
+      body: JSON.stringify(data)
+    })
+  }
+
   calcLaunch = () => {
     let W = ((parseFloat(this.state.mass) + parseFloat(this.state.totalWeight))  * 0.0098);
     let a = (this.state.avgThrust / W ) - 1;
@@ -138,8 +146,7 @@ class App extends Component {
     for (let i = t; i < parseFloat(this.state.tTA); i += 0.1) {
       graphData.push({x: i, y: graphAlt(i)})
     }
-
-    console.log(graphData);
+    this.setState({fillXY: graphData})
   }
 
   componentDidMount() {
@@ -167,6 +174,7 @@ class App extends Component {
           maxAlt={this.state.maxAlt}
           maxVel={this.state.maxVel}
           tTA={this.state.tTA}
+          fillXY={this.state.fillXY}
         />
         <SignupPage
           showSignup={this.state.showSignup}

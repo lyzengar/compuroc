@@ -4,7 +4,7 @@ import './Inputs.css';
 const Inputs = (props) => {
 
     return (
-    <div>
+    <div className="inputs">
         <select defaultValue="Drag Coefficient" name="Drag Coefficient" onChange={(e) => props.handleChange('dragCoef', e)}>
             <option value='Drag Coefficient'>Drag Coefficient</option>
             <option value="0.25">0.25</option>

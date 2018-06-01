@@ -3,8 +3,18 @@
     flex-direction: column;
     width: 20%;
     height: 75vh;
-    border: solid black 1px;
     padding: 20px;
     margin-right: 10px;
     font-family: 'Orbitron', sans-serif;
+}
+
+button {
+    max-width: 50px;
+    border-radius: 4px;
+}
+
+button:hover {
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    background-color: rgba(26, 145, 114, 0.5);
+    color: white;
 }

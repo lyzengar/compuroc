@@ -7,9 +7,7 @@ const FlightInfo = (props) => {
             <button disabled={props.disableButton} onClick={props.calcLaunch}>Launch</button>
             <h4>Max Altitude: {props.maxAlt}</h4>
             <h4>Max Velocity: {props.maxVel}</h4>
-            <h4>Time To Apogee: {props.tTA.toFixed(2)} sec.</h4>
-            <input type="text" placeholder="Name"/>
-            <button>Save</button>
+            <h4>Time To Apogee: {props.tTA ? parseFloat(props.tTA).toFixed(2): "0"} sec.</h4>
         </div>
     )
 }

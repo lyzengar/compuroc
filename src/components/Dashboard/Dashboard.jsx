@@ -14,6 +14,7 @@ const Dashboard = (props) => {
                 motorClass={props.motorClass}
                 graphLaunch={props.graphLaunch}
                 handleMotorData={props.handleMotorData}
+                fillXY={props.fillXY}
                 />
             <FlightInfo
                 calcLaunch={props.calcLaunch}

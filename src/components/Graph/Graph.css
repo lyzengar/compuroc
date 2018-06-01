@@ -1,9 +1,14 @@
-.Graph {
-    border: dashed black 1px;
-    margin-top: 20px;
-    height: 71vh;
+/* canvas {
+    height: 400px !important;
+    width: 400px !important;
+} */
+
+.saveField {
+    display: flex;
+    margin: 30px;
+    justify-content: center;
 }
-button {
-    max-width: 50px;
-    border-radius: 4px;
+
+.saveField input {
+    margin-right: 10px;
 }

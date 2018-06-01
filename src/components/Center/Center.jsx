@@ -16,7 +16,7 @@ const Center = (props) => {
                 calcLaunch={props.calcLaunch}
                 graphLaunch={props.graphLaunch}
                 disableButton={props.disableButton}
-
+                fillXY={props.fillXY}
             />
         </div>
     )
