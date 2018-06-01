@@ -1,5 +1,5 @@
 import React from 'react';
-//import Materialize from 'react-materialize';
+import logo from './rocket_icon.png';
 import './Nav.css';
 
 const NavBar = (props) => {
@@ -20,6 +20,7 @@ const NavBar = (props) => {
       <div className='NavBar'>
         {nav}
         <h1>compuRoc</h1>
+        <div className='logo-div'><img src={logo} alt=""/></div>
       </div>
     );
   };

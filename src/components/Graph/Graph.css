@@ -3,3 +3,7 @@
     margin-top: 20px;
     height: 71vh;
 }
+button {
+    max-width: 50px;
+    border-radius: 4px;
+}

@@ -28,13 +28,12 @@ class App extends Component {
       propWeight: "",
       maxAlt: "",
       maxVel: "",
-      timeToApogee: "",
-      showSignup: false,
-      showLogin: false,
       tTA: "", 
       tCoast: "", 
       Scoast: "", 
       newBeta: "", 
+      showSignup: false,
+      showLogin: false,
       disableButton: true
     }
   }
@@ -78,7 +77,6 @@ class App extends Component {
         body: postData
       }).then(res => res.text())
         .then(xml => parseString(xml, (err, data) => {
-          console.log(data)
           let apiResults = data["search-response"].results[0].result
           let commonNames = apiResults.map(result => result['common-name'][0]);
           this.setState({motorClass: commonNames})
@@ -94,13 +92,11 @@ class App extends Component {
         body: postData
       }).then(res => res.text())
         .then(xml => parseString(xml, (err, data) => {
-          console.log(data)
           let apiResults = data["search-response"].results[0].result[0];
           let averageThrust = apiResults['avg-thrust-n'];
           let burn = apiResults['burn-time-s'];
           let totalW = apiResults['total-weight-g'];
           let propW = apiResults['prop-weight-g'];
-          console.log(burn[0])
           this.setState({
             avgThrust: averageThrust[0],
             burnTime: burn[0], 
@@ -110,8 +106,6 @@ class App extends Component {
           })
         }))
   }
-
-  //manufacturerId=1&designation=&motor=&type=&impulseClass=H&diameter=&certOrgId=&propellant=&availability=regular%2Coccasional%2C+&sortBy=impulse_class
 
   calcLaunch = () => {
     let W = ((parseFloat(this.state.mass) + parseFloat(this.state.totalWeight))  * 0.0098);
@@ -130,21 +124,22 @@ class App extends Component {
     
     this.setState({
       tTA: tTA, tCoast: tCoast, Scoast: Scoast, newBeta: newBeta
+    }, function() {
+      this.graphLaunch();
     });
 
-    this.graphLaunch();
   }
 
   graphLaunch = () => {
     var graphData = [{x: 0, y: 0}];
-    var t = parseFloat(this.state.tTA) - this.state.tCoast;
-    let graphAlt = (t) =>  this.state.Scoast + (2 * this.state.newBeta / this.state.rho * G) * Math.log(Math.cos(Math.sqrt(RHO / 2 * this.state.newBeta) * G * (this.state.tCoast - t)));
+    var t = parseFloat(this.state.tTA) - parseFloat(this.state.tCoast);
+    let graphAlt = (t) =>  parseFloat(this.state.Scoast) + ((2 * parseFloat(this.state.newBeta)) / (RHO * G)) * Math.log(Math.cos(Math.sqrt(RHO / (2 * parseFloat(this.state.newBeta))) * G * ((parseFloat(this.state.tCoast) - t))));
     
-    for (let i = t; i < this.state.tTA; i += 0.1) {
+    for (let i = t; i < parseFloat(this.state.tTA); i += 0.1) {
       graphData.push({x: i, y: graphAlt(i)})
     }
 
-    //console.log(graphData);
+    console.log(graphData);
   }
 
   componentDidMount() {
@@ -164,12 +159,14 @@ class App extends Component {
         <Dashboard
           handleChange={this.handleChange}
           handleManSelected={this.handleManSelected}
-          getMotorInfo={this.getMotorInfo}
           motorClass={this.state.motorClass}
           handleMotorData={this.handleMotorData}
           calcLaunch={this.calcLaunch}
           graphLaunch={this.graphLaunch}
           disableButton={this.state.disableButton}
+          maxAlt={this.state.maxAlt}
+          maxVel={this.state.maxVel}
+          tTA={this.state.tTA}
         />
         <SignupPage
           showSignup={this.state.showSignup}

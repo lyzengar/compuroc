@@ -3,6 +3,24 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin: 0 20px;
+    padding: 0 20px;
     height: 50px;
+    background-color: gray;
+    font-family: 'Orbitron', sans-serif;
+}
+
+img {
+    max-width: 35px;
+}
+
+.logo-div {
+    width: 25%;
+    max-height: 35px;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 20px;
+}
+
+.NavBar-link, .NavBar-welcome {
+    font-size: 12px;
 }

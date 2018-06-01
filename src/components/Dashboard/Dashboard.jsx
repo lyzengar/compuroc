@@ -12,13 +12,15 @@ const Dashboard = (props) => {
                 handleChange={props.handleChange}
                 handleManSelected={props.handleManSelected}
                 motorClass={props.motorClass}
-                calcLaunch={props.calcLaunch}
                 graphLaunch={props.graphLaunch}
                 handleMotorData={props.handleMotorData}
-                disableButton={props.disableButton}
-            />
+                />
             <FlightInfo
-                getMotorInfo={props.getMotorInfo}
+                calcLaunch={props.calcLaunch}
+                disableButton={props.disableButton}
+                maxAlt={props.maxAlt}
+                maxVel={props.maxVel}
+                tTA={props.tTA}
             />
         </div>
     )
