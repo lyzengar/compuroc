@@ -15,6 +15,8 @@ const Center = (props) => {
             <Graph
                 calcLaunch={props.calcLaunch}
                 graphLaunch={props.graphLaunch}
+                disableButton={props.disableButton}
+
             />
         </div>
     )

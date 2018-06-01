@@ -5,7 +5,7 @@ const Graph = (props) => {
     return (
         <div className="Graph">
             <h1>Graph</h1>
-            <button onClick={props.calcLaunch}>Graph</button>
+            <button disabled={props.disableButton} onClick={props.calcLaunch || props.graphLaunch}>Graph</button>
         </div>
     )
 }

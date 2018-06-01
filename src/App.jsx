@@ -7,6 +7,10 @@ import LoginPage from './pages/LoginPage';
 import Dashboard from './components/Dashboard/Dashboard';
 const parseString = require('xml2js').parseString;
 
+// Mathematical constants 
+const G = 9.8;
+const RHO = 1.225;
+
 class App extends Component {
   constructor() {
     super();
@@ -26,7 +30,12 @@ class App extends Component {
       maxVel: "",
       timeToApogee: "",
       showSignup: false,
-      showLogin: false
+      showLogin: false,
+      tTA: "", 
+      tCoast: "", 
+      Scoast: "", 
+      newBeta: "", 
+      disableButton: true
     }
   }
 
@@ -91,43 +100,51 @@ class App extends Component {
           let burn = apiResults['burn-time-s'];
           let totalW = apiResults['total-weight-g'];
           let propW = apiResults['prop-weight-g'];
-          this.setState({avgThrust: averageThrust[0]})
-          this.setState({burnTime: burn[0]})
-          this.setState({totalWeight: totalW[0]})
-          this.setState({propWeight: propW[0]})
+          console.log(burn[0])
+          this.setState({
+            avgThrust: averageThrust[0],
+            burnTime: burn[0], 
+            totalWeight: totalW[0], 
+            propWeight: propW[0], 
+            disableButton: false
+          })
         }))
   }
 
   //manufacturerId=1&designation=&motor=&type=&impulseClass=H&diameter=&certOrgId=&propellant=&availability=regular%2Coccasional%2C+&sortBy=impulse_class
 
   calcLaunch = () => {
-    var W = ((this.state.mass + this.state.totalWeight)/1000) * 9.8;
-    var a = (this.state.avgThrust / W * 9.8) - 1;
-    var A = Math.pow((Math.PI * this.state.diameter), 2) / 4
-    var beta = W / (this.state.dragCoef * A);
-    this.g = 9.8;
-    this.rho = 1.225;
-    var Sburnout = (2 * beta / this.g * this.rho) * Math.log(Math.cosh(Math.sqrt((a * this.rho) / (2 * beta)) * this.g * this.state.burnTime));
-    var Vburnout = Math.sqrt((2 * beta * a) / this.rho) * Math.tanh(Math.sqrt((a * this.rho) / (2 * beta)) * this.g * this.state.burnTime); //maxVel
-    var newW = ((this.state.mass + this.state.totalWeight - this.state.propWeight)/1000) * 9.8;
-    var newa = (this.state.avgThrust / newW * 9.8) - 1;
-    this.newBeta = newW / (this.state.dragCoef * A);
-    this.Scoast = (this.newBeta / this.g * this.rho) * Math.log(1 + (this.rho / 2 * this.newBeta) * Math.pow(Vburnout, 2));
-    this.tCoast = (Math.sqrt(2 * this.newBeta / this.rho) / this.g) * Math.atan(Math.sqrt(this.rho / 2 * this.newBeta) * Vburnout);
-    var maxAltitude = Sburnout + this.Scoast;
-    this.tTA = this.state.burnTime + this.tCoast; //timeToApogee
+    let W = ((parseFloat(this.state.mass) + parseFloat(this.state.totalWeight))  * 0.0098);
+    let a = (this.state.avgThrust / W ) - 1;
+    let A = (Math.pow(parseFloat(this.state.diameter), 2) * Math.PI / 4) / 1000000;
+    let beta = W / (parseFloat(this.state.dragCoef) * A);
+    let Sburnout = (2 * beta / G * RHO) * Math.log(Math.cosh(Math.sqrt((a * RHO) / (2 * beta)) * G * parseFloat(this.state.burnTime)));
+    let Vburnout = Math.sqrt((2 * beta * a) / RHO) * Math.tanh(Math.sqrt((a * RHO) / (2 * beta))) * G * parseFloat(this.state.burnTime); //maxVel
+    let newW = ((parseFloat(this.state.mass) + (parseFloat(this.state.totalWeight)) - (parseFloat(this.state.propWeight))) * 0.0098);
+    let newa = (parseFloat(this.state.avgThrust) / newW) - 1;
+    let newBeta = newW / (parseFloat(this.state.dragCoef) * A);
+    let Scoast = (newBeta / (G * RHO)) * Math.log(1 + (RHO / (2 * newBeta)) * Math.pow(Vburnout, 2));
+    let tCoast = (Math.sqrt(2 * newBeta / RHO) / G) * Math.atan(Math.sqrt(RHO / 2 * newBeta) * Vburnout);
+    var maxAltitude = Sburnout + Scoast;
+    let tTA = parseFloat(this.state.burnTime) + tCoast; //timeToApogee
+    
+    this.setState({
+      tTA: tTA, tCoast: tCoast, Scoast: Scoast, newBeta: newBeta
+    });
 
     this.graphLaunch();
   }
 
   graphLaunch = () => {
     var graphData = [{x: 0, y: 0}];
-    var t = this.tTA - this.tCoast;
-    var graphAlt = () => this.Scoast + (2 * this.newBeta / this.rho * this.g) * Math.log(Math.cos(Math.sqrt(this.rho / 2 * this.newBeta) * this.g * (this.tCoast - t)));
-    for(var i = t; i < this.tTA; i + 0.1) {
-      graphData.push({x: i, y: graphAlt()})
+    var t = parseFloat(this.state.tTA) - this.state.tCoast;
+    let graphAlt = (t) =>  this.state.Scoast + (2 * this.state.newBeta / this.state.rho * G) * Math.log(Math.cos(Math.sqrt(RHO / 2 * this.state.newBeta) * G * (this.state.tCoast - t)));
+    
+    for (let i = t; i < this.state.tTA; i += 0.1) {
+      graphData.push({x: i, y: graphAlt(i)})
     }
-    console.log(graphData);
+
+    //console.log(graphData);
   }
 
   componentDidMount() {
@@ -152,6 +169,7 @@ class App extends Component {
           handleMotorData={this.handleMotorData}
           calcLaunch={this.calcLaunch}
           graphLaunch={this.graphLaunch}
+          disableButton={this.state.disableButton}
         />
         <SignupPage
           showSignup={this.state.showSignup}

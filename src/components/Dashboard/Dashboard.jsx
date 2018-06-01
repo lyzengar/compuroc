@@ -15,6 +15,7 @@ const Dashboard = (props) => {
                 calcLaunch={props.calcLaunch}
                 graphLaunch={props.graphLaunch}
                 handleMotorData={props.handleMotorData}
+                disableButton={props.disableButton}
             />
             <FlightInfo
                 getMotorInfo={props.getMotorInfo}
