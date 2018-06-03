@@ -75,7 +75,7 @@ class App extends Component {
   
   handleManSelected = () => {
     var postData = `<search-request><manufacturer>${this.state.motorManu}</manufacturer><impulse-class>${this.state.motorLetter}</impulse-class></search-request>`;
-      fetch('https://www.thrustcurve.org/servlets/search', {
+      fetch('//www.thrustcurve.org/servlets/search', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: postData
@@ -90,7 +90,7 @@ class App extends Component {
   handleMotorData = (e) => {
     this.setState({selectedMotorClass: e.target.value})
     var postData = `<search-request><manufacturer>${this.state.motorManu}</manufacturer><impulse-class>${this.state.motorLetter}</impulse-class><common-name>${e.target.value}</common-name></search-request>`;
-      fetch('https://www.thrustcurve.org/servlets/search', {
+      fetch('//www.thrustcurve.org/servlets/search', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: postData
