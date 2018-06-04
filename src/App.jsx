@@ -82,19 +82,21 @@ class App extends Component {
       errors.innerText=`${manu.value} does not make ${motorLetters.value} motors.`
     }
     var postData = `<search-request><manufacturer>${this.state.motorManu}</manufacturer><impulse-class>${this.state.motorLetter}</impulse-class></search-request>`;
-      fetch('//thrustcurve.org/servlets/search', {
+      fetch('/api/flights/apiProxy', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: postData
       })
-        .then(res => res.text())
-        .then(xml => parseString(xml, (err, data) => {
-          let apiResults = data["search-response"].results[0].result
-          let commonNames = apiResults.map(result => result['common-name'][0]);
-          this.setState({motorClass: commonNames})
-        })).catch(function(err) {
-          handleErr();
-        })
+      .then(res => res.text())
+      .then(xml => parseString(xml, (err, data) => {
+        let apiResults = data["search-response"].results[0].result;
+        console.log('apiResults: ', apiResults);
+        let commonNames = apiResults.map(result => result['common-name'][0]);
+        console.log(commonNames);
+        this.setState({motorClass: commonNames})
+      })).catch(function(err) {
+        handleErr();
+      })
   }
 
   handleMotorData = (e) => {

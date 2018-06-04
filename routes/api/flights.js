@@ -1,10 +1,7 @@
-// const express = require('express');
-// const router = express.Router;
-// //const flightsController = require('../../controllers/flights');
+const express = require('express');
+const router = express.Router();
+const apiProxyController = require('../../controllers/apiProxy');
 
-// router.get('/', flightsController.index);
-// router.post('/', flightsController.create);
-// router.get('/:flight_id', flightsController.show);
-// router.delete('/:flight_id', flightsController.destroy);
+router.post('/apiProxy', apiProxyController.apiProxy);
 
-// module.exports = router;
+module.exports = router;
