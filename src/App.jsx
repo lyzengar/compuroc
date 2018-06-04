@@ -160,7 +160,7 @@ class App extends Component {
     let newBeta = newW / (parseFloat(this.state.dragCoef) * A);
     let Scoast = (newBeta / (G * RHO)) * Math.log(1 + (RHO / (2 * newBeta)) * Math.pow(Vburnout, 2));
     let tCoast = (Math.sqrt(2 * newBeta / RHO) / G) * Math.atan(Math.sqrt(RHO / 2 * newBeta) * Vburnout);
-    var maxAltitude = Sburnout + Scoast;
+    let maxAltitude = Sburnout + Scoast;
     let tTA = parseFloat(this.state.burnTime) + tCoast; //timeToApogee
     
     this.setState({
@@ -172,8 +172,8 @@ class App extends Component {
   }
 
   graphLaunch = () => {
-    var graphData = [{x: 0, y: 0}];
-    var t = parseFloat(this.state.tTA) - parseFloat(this.state.tCoast);
+    let graphData = [{x: 0, y: 0}];
+    let t = parseFloat(this.state.tTA) - parseFloat(this.state.tCoast);
     let graphAlt = (t) =>  parseFloat(this.state.Scoast) + ((2 * parseFloat(this.state.newBeta)) / (RHO * G)) * Math.log(Math.cos(Math.sqrt(RHO / (2 * parseFloat(this.state.newBeta))) * G * ((parseFloat(this.state.tCoast) - t))));
     
     for (let i = t; i < parseFloat(this.state.tTA); i += 0.1) {

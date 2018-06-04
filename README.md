@@ -20,7 +20,7 @@
 
   [GitHub](https://github.com/lyzengar/compuroc)
 
-  [Trello]()
+  [Trello](https://trello.com/b/bKpE1HUi/compuroc)
 
   ### Unsolved Problems
   - Saved flights will not show up upon login - only when a new flight is saved.
