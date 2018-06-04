@@ -102,7 +102,7 @@ class App extends Component {
   handleMotorData = (e) => {
     this.setState({selectedMotorClass: e.target.value})
     var postData = `<search-request><manufacturer>${this.state.motorManu}</manufacturer><impulse-class>${this.state.motorLetter}</impulse-class><common-name>${e.target.value}</common-name></search-request>`;
-      fetch('//thrustcurve.org/servlets/search', {
+      fetch('/api/flights/apiProxy/motor', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: postData
