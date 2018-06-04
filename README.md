@@ -13,6 +13,7 @@
   - MongoDB
   - mLab
   - [Thrust Curve API](http://www.thrustcurve.org/searchapi.shtml)
+  - Heroku
 
   ### Getting Started
   [compuRoc](https://compuroc.herokuapp.com/)

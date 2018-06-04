@@ -24,4 +24,5 @@ img {
 
 .NavBar-link, .NavBar-welcome {
     font-size: 12px;
+    cursor: pointer;
 }
