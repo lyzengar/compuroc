@@ -15,7 +15,7 @@ img {
 }
 
 .logo-div {
-    width: 25%;
+    width: 15%;
     max-height: 35px;
     display: flex;
     justify-content: flex-end;
@@ -25,4 +25,5 @@ img {
 .NavBar-link, .NavBar-welcome {
     font-size: 12px;
     cursor: pointer;
+    width: 25%;
 }
