@@ -43,7 +43,7 @@ const Inputs = (props) => {
             <option value="296.2">"11.4"</option>
         </select>
         <input type="text" placeholder="Mass (grams)" onChange={(e) => props.handleChange('mass', e)}/><br/>
-        <select defaultValue="" onChange={(e) => props.handleChange('motorManu', e)}>
+        <select defaultValue="" onChange={(e) => props.handleChange('motorManu', e)} id="manu">
             <option value="">Motor Manufacturer</option>
             <option value="AeroTech">AeroTech (C-N)</option>
             <option value="Animal Motor Works">Animal Motor Works (I-M)</option>
@@ -54,7 +54,7 @@ const Inputs = (props) => {
             <option value="Loki Research">Loki Research (G-N)</option>
             <option value="Quest Aerospace">Quest Aerospace (A-D)</option>
         </select>
-        <select defaultValue="" onChange={(e) => props.handleChange('motorLetter', e)}>
+        <select defaultValue="" onChange={(e) => props.handleChange('motorLetter', e)} id="motorLetters">
             <option value="">Motor Letter</option>
             <option value="A">A</option>
             <option value="B">B</option>

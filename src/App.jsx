@@ -72,25 +72,34 @@ class App extends Component {
       }
     });
   }
+
   
   handleManSelected = () => {
+    let handleErr = () => {
+      let manu = document.getElementById('manu');
+      let motorLetters = document.getElementById('motorLetters');
+      console.log(`${manu.value} does not make ${motorLetters.value} motors.`)
+    }
     var postData = `<search-request><manufacturer>${this.state.motorManu}</manufacturer><impulse-class>${this.state.motorLetter}</impulse-class></search-request>`;
-      fetch('//www.thrustcurve.org/servlets/search', {
+      fetch('www.thrustcurve.org/servlets/search', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: postData
-      }).then(res => res.text())
+      })
+        .then(res => res.text())
         .then(xml => parseString(xml, (err, data) => {
           let apiResults = data["search-response"].results[0].result
           let commonNames = apiResults.map(result => result['common-name'][0]);
           this.setState({motorClass: commonNames})
-        }))  
+        })).catch(function(err) {
+          handleErr();
+        })
   }
 
   handleMotorData = (e) => {
     this.setState({selectedMotorClass: e.target.value})
     var postData = `<search-request><manufacturer>${this.state.motorManu}</manufacturer><impulse-class>${this.state.motorLetter}</impulse-class><common-name>${e.target.value}</common-name></search-request>`;
-      fetch('//www.thrustcurve.org/servlets/search', {
+      fetch('www.thrustcurve.org/servlets/search', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: postData
