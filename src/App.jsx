@@ -78,7 +78,8 @@ class App extends Component {
     let handleErr = () => {
       let manu = document.getElementById('manu');
       let motorLetters = document.getElementById('motorLetters');
-      console.log(`${manu.value} does not make ${motorLetters.value} motors.`)
+      let errors = document.getElementById('errors');
+      errors.innerText=`${manu.value} does not make ${motorLetters.value} motors.`
     }
     var postData = `<search-request><manufacturer>${this.state.motorManu}</manufacturer><impulse-class>${this.state.motorLetter}</impulse-class></search-request>`;
       fetch('//thrustcurve.org/servlets/search', {
@@ -161,7 +162,7 @@ class App extends Component {
     let tTA = parseFloat(this.state.burnTime) + tCoast; //timeToApogee
     
     this.setState({
-      tTA: tTA, tCoast: tCoast, Scoast: Scoast, newBeta: newBeta
+      tTA: tTA, tCoast: tCoast, Scoast: Scoast, newBeta: newBeta, maxVel: Vburnout, maxAlt: maxAltitude
     }, function() {
       this.graphLaunch();
     });

@@ -12,19 +12,19 @@ class SignupForm extends Component {
   }
 
   handleChange = (field, e) => {
-    //this.props.updateMessage('');
     this.setState({
       [field]: e.target.value
     });
   }
 
   handleSubmit = (e) => {
+    let errors = document.getElementById('errors');
     e.preventDefault();
     userService.signup(this.state)
       .then(() => {
         this.props.handleSignup();
       })
-      //.catch(err => this.props.updateMessage(err.message));
+      .catch(err => errors.innerText=err);
   }
 
   isFormInvalid() {

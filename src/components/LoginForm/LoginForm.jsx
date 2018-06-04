@@ -17,12 +17,13 @@ class LoginForm extends Component {
     }
   
     handleSubmit = (e) => {
+      let errors = document.getElementById('errors');
       e.preventDefault();
       userService.login(this.state)
       .then(() => {
         this.props.handleLogin();
       })
-      .catch(err => alert('Invalid Credentials'));
+      .catch(err => errors.innerText=err);
     }
   
     render() {

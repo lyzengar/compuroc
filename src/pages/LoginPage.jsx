@@ -7,7 +7,6 @@ const LoginPage = (props) => {
         <div className="Modal">
             <LoginForm
                 {...this.props}
-                //updateMessage={this.updateMessage}
                 handleLogin={props.handleLogin}
             />
         </div>
