@@ -9,6 +9,8 @@
   - CSS
   - JavaScript
   - React
+  - Node.js
+  - Express
   - Mongoose
   - MongoDB
   - mLab
