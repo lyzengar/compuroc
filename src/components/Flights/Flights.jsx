@@ -2,7 +2,6 @@ import React from 'react';
 import './Flights.css';
 
 const Flights = (props) => {
-    console.log(props)
     return (
         <div className="Flights">
             <h3>My Flights</h3>
