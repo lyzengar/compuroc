@@ -90,9 +90,7 @@ class App extends Component {
       .then(res => res.text())
       .then(xml => parseString(xml, (err, data) => {
         let apiResults = data["search-response"].results[0].result;
-        console.log('apiResults: ', apiResults);
         let commonNames = apiResults.map(result => result['common-name'][0]);
-        console.log(commonNames);
         this.setState({motorClass: commonNames})
       })).catch(function(err) {
         handleErr();
