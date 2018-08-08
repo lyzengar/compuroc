@@ -15,10 +15,19 @@
   - MongoDB
   - mLab
   - [Thrust Curve API](http://www.thrustcurve.org/searchapi.shtml)
+  - JSON Web Tokens
   - Heroku
 
   ### Getting Started
   [compuRoc](https://compuroc.herokuapp.com/)
+
+  Sample Flight: My Level 1 certification rocket specs
+  Drag Coefficient: 0.60
+  Diameter: 2.6
+  Weight: 300g
+  Motor Manufacturer: Aerotech
+  Motor Letter: H
+  Motor Classification: H180
 
   [GitHub](https://github.com/lyzengar/compuroc)
 
