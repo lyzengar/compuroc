@@ -43,8 +43,15 @@ function addFlight(req, res) {
   })
 }
 
+function getFlight(req, res) {
+  Flight.findById(req.flight._id, function(err, flight) {
+    return res.body;
+  })
+}
+
 module.exports = {
   signup,
   login,
-  addFlight
+  addFlight,
+  getFlight
 };

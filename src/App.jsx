@@ -73,6 +73,16 @@ class App extends Component {
     });
   }
 
+  handleMassChange = (field, e) => {
+    this.setState({
+      [field]: e.target.value
+    }, function() {
+      if (field === 'motorLetter' && this.state.motorManu) {
+        this.handleManSelected();
+      }
+    });
+  }
+
   
   handleManSelected = () => {
     let handleErr = () => {
@@ -159,7 +169,7 @@ class App extends Component {
     let Scoast = (newBeta / (G * RHO)) * Math.log(1 + (RHO / (2 * newBeta)) * Math.pow(Vburnout, 2));
     let tCoast = (Math.sqrt(2 * newBeta / RHO) / G) * Math.atan(Math.sqrt(RHO / 2 * newBeta) * Vburnout);
     let maxAltitude = Sburnout + Scoast;
-    let tTA = parseFloat(this.state.burnTime) + tCoast; //time to a pogee
+    let tTA = parseFloat(this.state.burnTime) + tCoast; //time to apogee
     
     this.setState({
       tTA: tTA, tCoast: tCoast, Scoast: Scoast, newBeta: newBeta, maxVel: Vburnout, maxAlt: maxAltitude
