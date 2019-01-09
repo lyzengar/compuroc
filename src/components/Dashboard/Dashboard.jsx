@@ -12,6 +12,7 @@ const Dashboard = (props) => {
             />
             <Center
                 handleChange={props.handleChange}
+                handleMassChange={props.handleMassChange}
                 handleManSelected={props.handleManSelected}
                 motorClass={props.motorClass}
                 graphLaunch={props.graphLaunch}

@@ -74,13 +74,10 @@ class App extends Component {
   }
 
   handleMassChange = (field, e) => {
-    this.setState({
-      [field]: e.target.value
-    }, function() {
-      if (field === 'motorLetter' && this.state.motorManu) {
-        this.handleManSelected();
-      }
-    });
+    const re = /^[0-9\b]+$/;
+    if (re.test(e.target.value)){
+    this.setState({[field]: e.target.value})
+    }
   }
 
   
@@ -206,6 +203,7 @@ class App extends Component {
           />
         <Dashboard
           handleChange={this.handleChange}
+          handleMassChange={this.handleMassChange}
           handleManSelected={this.handleManSelected}
           motorClass={this.state.motorClass}
           handleMotorData={this.handleMotorData}

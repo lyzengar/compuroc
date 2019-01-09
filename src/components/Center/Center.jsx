@@ -9,6 +9,7 @@ const Center = (props) => {
         <div className="Center">
             <Inputs
                 handleChange={props.handleChange}
+                handleMassChange={props.handleMassChange}
                 handleManSelected={props.handleManSelected}
                 motorClass={props.motorClass}
                 handleMotorData={props.handleMotorData}
