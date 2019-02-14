@@ -9,6 +9,7 @@ const Dashboard = (props) => {
         <div className="Dashboard">
             <Flights
                 flights={props.flights}
+                user={props.user}
             />
             <Center
                 handleChange={props.handleChange}

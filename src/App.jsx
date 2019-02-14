@@ -217,6 +217,7 @@ class App extends Component {
           addFlight={this.addFlight}
           updateName={this.updateName}
           flights={this.state.flights}
+          user={this.state.user}
         />
         <SignupPage
           showSignup={this.state.showSignup}
