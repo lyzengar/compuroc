@@ -48,7 +48,7 @@ const Inputs = (props) => {
             <option value="AeroTech">AeroTech (C-N)</option>
             <option value="Animal Motor Works">Animal Motor Works (I-M)</option>
             <option value="Cesaroni Technology">Cesaroni Technology (E-O)</option>
-            <option value="Estes Industries">Estes Industries (A-G)</option>
+            {/* <option value="Estes Industries">Estes Industries (A-G)</option> */}
             <option value="Gorilla Rocket Motors">Gorilla Rocket Motors (J-O)</option>
             <option value="Kosdon by Aerotech">Kosdon by Aerotech (G-M)</option>
             <option value="Loki Research">Loki Research (G-N)</option>
