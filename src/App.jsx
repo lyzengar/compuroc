@@ -149,6 +149,27 @@ class App extends Component {
     .then(data => this.setState({flights: data.flights}))
   }
 
+  loadFlights = () => {
+    fetch('/api/users/getFlight', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + tokenService.getToken()
+      },
+      body: JSON.stringify({
+        diameter: this.state.diameter,
+        mass: this.state.mass,
+        dragCoef: this.state.dragCoef,
+        motorManu: this.state.motorManu,
+        motorLetter: this.state.motorLetter,
+        motorClass: this.state.motorClass[0],
+        name: this.state.flightName
+      })
+    })
+    .then(data => data.json())
+    .then(data => this.setState({flights: data.flights}))
+  }
+
   updateName = (e) => {
     this.setState({flightName: e.target.value})
   }
@@ -190,6 +211,7 @@ class App extends Component {
   componentDidMount() {
     let user = userService.getUser();
     this.setState({user});
+    //this.loadFlights();
   }
 
   render() {
@@ -215,6 +237,7 @@ class App extends Component {
           tTA={this.state.tTA}
           fillXY={this.state.fillXY}
           addFlight={this.addFlight}
+          loadFlights={this.loadFlights}
           updateName={this.updateName}
           flights={this.state.flights}
           user={this.state.user}
