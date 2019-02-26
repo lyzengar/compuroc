@@ -42,7 +42,9 @@ const Inputs = (props) => {
             <option value="194.9">"7.5"</option>
             <option value="296.2">"11.4"</option>
         </select>
-        <input type="number" placeholder="Mass (grams)" onChange={(evt) => props.handleMassChange('mass', evt)}/><br/>
+        <input type="number"
+            onKeyDown={ (evt) => evt.key === 'e' && evt.preventDefault() }
+            placeholder="Mass (grams)" onChange={(evt) => props.handleMassChange('mass', evt)}/><br/>
         <select defaultValue="" onChange={(e) => props.handleChange('motorManu', e)} id="manu">
             <option value="">Motor Manufacturer</option>
             <option value="AeroTech">AeroTech (C-N)</option>
