@@ -5,7 +5,7 @@ const Inputs = (props) => {
 
     return (
     <div className="inputs">
-        <select defaultValue="Drag Coefficient" name="Drag Coefficient" onChange={(e) => props.handleChange('dragCoef', e)}>
+        <select defaultValue="Drag Coefficient" name="Drag Coefficient" onChange={(evt) => props.handleChange('dragCoef', evt)}>
             <option value='Drag Coefficient'>Drag Coefficient</option>
             <option value="0.25">0.25</option>
             <option value="0.30">0.30</option>
@@ -21,7 +21,7 @@ const Inputs = (props) => {
             <option value="0.80">0.80</option>
             <option value="0.85">0.85</option>
         </select>
-        <select defaultValue="" onChange={(e) => props.handleChange('diameter', e)}>
+        <select defaultValue="" onChange={(evt) => props.handleChange('diameter', evt)}>
             <option value="">Diameter</option>
             <option value="13.8">BT-5</option>
             <option value="18.7">BT-20</option>
@@ -42,7 +42,7 @@ const Inputs = (props) => {
             <option value="194.9">"7.5"</option>
             <option value="296.2">"11.4"</option>
         </select>
-        <input type="number" placeholder="Mass (grams)" onChange={(e) => props.handleMassChange('mass', e)}/><br/>
+        <input type="number" placeholder="Mass (grams)" onChange={(evt) => props.handleMassChange('mass', evt)}/><br/>
         <select defaultValue="" onChange={(e) => props.handleChange('motorManu', e)} id="manu">
             <option value="">Motor Manufacturer</option>
             <option value="AeroTech">AeroTech (C-N)</option>
@@ -54,7 +54,7 @@ const Inputs = (props) => {
             <option value="Loki Research">Loki Research (G-N)</option>
             <option value="Quest Aerospace">Quest Aerospace (A-D)</option>
         </select>
-        <select defaultValue="" onChange={(e) => props.handleChange('motorLetter', e)} id="motorLetters">
+        <select defaultValue="" onChange={(evt) => props.handleChange('motorLetter', evt)} id="motorLetters">
             <option value="">Motor Letter</option>
             <option value="A">A</option>
             <option value="B">B</option>
@@ -72,7 +72,7 @@ const Inputs = (props) => {
             <option value="N">N</option>
             <option value="O">O</option>
         </select>
-        <select defaultValue="" onChange={(e) => props.handleMotorData(e)}>
+        <select defaultValue="" onChange={(evt) => props.handleMotorData(evt)}>
             <option value="">Motor Classification</option>
             {props.motorClass ? props.motorClass.map(mclass => (
                 <option value={mclass}>{mclass}</option>

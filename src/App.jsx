@@ -63,9 +63,9 @@ class App extends Component {
     this.setState({user: userService.getUser(), showLogin: false});
   }
 
-  handleChange = (field, e) => {
+  handleChange = (field, evt) => {
     this.setState({
-      [field]: e.target.value
+      [field]: evt.target.value
     }, function() {
       if (field === 'motorLetter' && this.state.motorManu) {
         this.handleManSelected();
@@ -73,10 +73,10 @@ class App extends Component {
     });
   }
 
-  handleMassChange = (field, e) => {
+  handleMassChange = (field, evt) => {
     const re = /^[0-9\b]+$/;
-    if (re.test(e.target.value)){
-    this.setState({[field]: e.target.value})
+    if (re.test(evt.target.value)){
+    this.setState({[field]: evt.target.value})
     }
   }
 
