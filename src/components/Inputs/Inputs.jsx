@@ -45,7 +45,7 @@ const Inputs = (props) => {
         <input type="number"
             onKeyDown={ (evt) => evt.key === 'e' && evt.preventDefault() }
             placeholder="Mass (grams)" onChange={(evt) => props.handleMassChange('mass', evt)}/><br/>
-        <select defaultValue="" onChange={(e) => props.handleChange('motorManu', e)} id="manu">
+        <select defaultValue="" onChange={(evt) => props.handleChange('motorManu', evt)} id="manu">
             <option value="">Motor Manufacturer</option>
             <option value="AeroTech">AeroTech (C-N)</option>
             <option value="Animal Motor Works">Animal Motor Works (I-M)</option>

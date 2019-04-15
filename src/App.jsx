@@ -88,7 +88,7 @@ class App extends Component {
       let errors = document.getElementById('errors');
       errors.innerText=`${manu.value} does not make ${motorLetters.value} motors.`
     }
-    var postData = `<search-request><manufacturer>${this.state.motorManu}</manufacturer><impulse-class>${this.state.motorLetter}</impulse-class></search-request>`;
+    let postData = `<search-request><manufacturer>${this.state.motorManu}</manufacturer><impulse-class>${this.state.motorLetter}</impulse-class></search-request>`;
       fetch('/api/flights/apiProxy', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -106,7 +106,7 @@ class App extends Component {
 
   handleMotorData = (e) => {
     this.setState({selectedMotorClass: e.target.value})
-    var postData = `<search-request><manufacturer>${this.state.motorManu}</manufacturer><impulse-class>${this.state.motorLetter}</impulse-class><common-name>${e.target.value}</common-name></search-request>`;
+    let postData = `<search-request><manufacturer>${this.state.motorManu}</manufacturer><impulse-class>${this.state.motorLetter}</impulse-class><common-name>${e.target.value}</common-name></search-request>`;
       fetch('/api/flights/apiProxy/motor', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
