@@ -102,6 +102,7 @@ class App extends Component {
       })).catch(function(err) {
         handleErr();
       })
+      this.clearErr();
   }
 
   handleMotorData = (e) => {
@@ -126,6 +127,11 @@ class App extends Component {
             disableButton: false
           })
         }))
+  }
+
+  clearErr = () => {
+    let errors = document.getElementById('errors');
+    errors.innerText = "";
   }
 
   addFlight = () => {
