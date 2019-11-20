@@ -64,6 +64,7 @@ class App extends Component {
   }
 
   handleChange = (field, evt) => {
+    this.clearErr();
     this.setState({
       [field]: evt.target.value
     }, function() {
@@ -102,7 +103,6 @@ class App extends Component {
       })).catch(function(err) {
         handleErr();
       })
-      this.clearErr();
   }
 
   handleMotorData = (e) => {
