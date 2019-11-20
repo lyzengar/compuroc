@@ -86,7 +86,7 @@ class App extends Component {
       let manu = document.getElementById('manu');
       let motorLetters = document.getElementById('motorLetters');
       let errors = document.getElementById('errors');
-      errors.innerText=`${manu.value} does not make ${motorLetters.value} motors.`
+      errors.innerText =`${manu.value} does not make ${motorLetters.value} motors.`
     }
     let postData = `<search-request><manufacturer>${this.state.motorManu}</manufacturer><impulse-class>${this.state.motorLetter}</impulse-class></search-request>`;
       fetch('/api/flights/apiProxy', {
