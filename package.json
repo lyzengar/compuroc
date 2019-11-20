@@ -9,7 +9,7 @@
     "express": "^4.16.3",
     "jsonwebtoken": "^8.2.1",
     "mongoose": "^5.1.2",
-    "morgan": "^1.9.0",
+    "morgan": "^1.9.1",
     "react": "^16.3.2",
     "react-chartjs": "^1.2.0",
     "react-dom": "^16.3.2",
